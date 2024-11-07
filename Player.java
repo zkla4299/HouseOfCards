@@ -1,39 +1,48 @@
+import java.util.*;
+class Player {
+    private final int playerNumber;
+    private int chips;
+    private final List<Card> hand;
+    private boolean isDealer;
 
-public class Player {
-	private double balance;
-	private int betDenom;
-	private int spinCount;
-	
-	
-	public Player(double initialBalance) {
-		this.balance = initialBalance;
-	}
+    public Player(int playerNumber, int initialChips) {
+        this.playerNumber = playerNumber;
+        this.chips = initialChips;
+        this.hand = new ArrayList<>();
+        this.isDealer = false;
+    }
 
+    public int displayPlayerNumber() {
+        return playerNumber;
+    }
 
-	public double getBalance() {
-		return balance;
-	}
+    public void placeBet(int amount) {
+        if (amount > chips) {
+            throw new IllegalStateException("Insufficient chips: " + chips + " < " + amount);
+        }
+        chips -= amount;
+    }
 
-	public int getBetDenom() {
-		return betDenom;
-	}
+    public void fold() {
+        hand.clear();
+    }
 
-	public void setBetDenom(int betDenom) {
-		this.betDenom = betDenom;
-	}
+    public HandRank checkHand(List<Card> communityCards) {
+        List<Card> allCards = new ArrayList<>(hand);
+        allCards.addAll(communityCards);
+        return HandEvaluator.evaluateHand(allCards);
+    }
 
+    public void receiveCard(Card card) {
+        if (hand.size() >= 2) {
+            throw new IllegalStateException("Player already has maximum number of cards");
+        }
+        hand.add(card);
+    }
 
-	public int getSpinCount() {
-		return spinCount;
-	}
-
-	public void setSpinCount(int spinCount) {
-		this.spinCount = spinCount;
-	}
-	
-	
-	public void adjustBalance(double amount) {
-		balance += amount;
-	}
-
+    public List<Card> getHand() { return new ArrayList<>(hand); }
+    public int getChips() { return chips; }
+    public void addChips(int amount) { chips += amount; }
+    public void setDealer(boolean dealer) { isDealer = dealer; }
+    public boolean isDealer() { return isDealer; }
 }

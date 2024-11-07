@@ -1,34 +1,35 @@
 import java.util.*;
-public class Deck {
+class Deck {
+    private final List<Card> cards;
+    private static final String[] SUITS = {"Hearts", "Diamonds", "Clubs", "Spades"};
+    private static final String[] RANKS = {
+            "2", "3", "4", "5", "6", "7", "8", "9", "10",
+            "Jack", "Queen", "King", "Ace"
+    };
 
-    private ArrayList<card> deckOfCardsNoShuffle = new ArrayList<card>();
-    private Stack<card> deckOfCardsShuffle = new Stack<card>();
-    private Random random = new Random();
     public Deck() {
-        char[] chars = {'♥', '♣', '♦', '♠'};
-        for(int i = 0; i < chars.length; i ++) {
-            for(int j = 1; j < 14; j ++) {
-                    deckOfCardsNoShuffle.add(new card(j, chars[i]));
+        cards = new ArrayList<>();
+        reset();
+    }
+
+    public void reset() {
+        cards.clear();
+        for (String suit : SUITS) {
+            for (String rank : RANKS) {
+                cards.add(new Card(suit, rank));
             }
         }
+        shuffle();
     }
 
-    public void makeAndShuffleCards(boolean jockers) {
-        deckOfCardsShuffle.clear();
-        ArrayList<card> tempDeck = new ArrayList<>(deckOfCardsNoShuffle); // Make a copy of the original deck
-        while(!tempDeck.isEmpty()) {
-            int index = random.nextInt(tempDeck.size());
-            deckOfCardsShuffle.push(tempDeck.remove(index));
-        }
+    public void shuffle() {
+        Collections.shuffle(cards);
     }
-    public void printDeck() {
-        while(!deckOfCardsShuffle.isEmpty()) {
-            card c = deckOfCardsShuffle.pop();
-            System.out.println(c.getCardKind() + " " + c.getCardVal());
+
+    public Card drawCard() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("No cards left in deck");
         }
-    }
-   public card drawCard() {
-        card topCard = deckOfCardsShuffle.pop();
-        return topCard;
+        return cards.remove(cards.size() - 1);
     }
 }
