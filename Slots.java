@@ -4,13 +4,13 @@ import java.util.Scanner;
 public class Slots {
 	private Scanner in;
 	private Random random;
-	private Player player;
+	private PlayerPoker player;
 	private Machine machine;
 
 	public Slots() {
 		in = new Scanner(System.in);
 		random = new Random();
-		player = new Player(500);
+		player = new PlayerPoker(500);
 
 	}
 
