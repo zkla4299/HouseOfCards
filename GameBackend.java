@@ -11,7 +11,7 @@ public class GameBackend {
     private boolean doGettingInput = true; //Whether or not the game will wait to get new input before contiuing or not
     private boolean gettingInput = false; //Is the game currently waiting for player input
 
-    private double balance = 0; //Current player balance
+    private double balance = 250; //Current player balance
     
     //Boolean Switches
 
@@ -43,7 +43,7 @@ public class GameBackend {
                         state = "GameWin";
                     }
                     else if (switch7){
-                        switch3 = Oxvegas.blackJack();
+                        //switch3 = Oxvegas.blackJack(this);
                         switch7 = false;
                         if (switch3){
 
@@ -62,9 +62,10 @@ public class GameBackend {
                         }
                     }
                     else if (switch9){
-                        Slots SG = new Slots();
-                        /*switch5 = */SG.startGame();
+                        Slots SG = new Slots(this);
+                        switch5 = SG.startGame();
                         switch9 = false;
+                        System.out.println(balance);
                         if (switch5){
 
                         }else{

@@ -6,21 +6,22 @@ public class Slots {
 	private Random random;
 	private PlayerSlots player;
 	private Machine machine;
+	private GameBackend gb;
 
-	public Slots() {
+	public Slots(GameBackend gb) {
+		this.gb = gb;
 		in = new Scanner(System.in);
 		random = new Random();
-		player = new PlayerSlots(500);
+		player = new PlayerSlots(gb.getBalance());
 
 	}
 
-	public void startGame() {
+	public boolean startGame() {
 		intro();
 		chooseMachine();
 		setBetDenomination();
 		setSpinCount();
-		playSpins();
-		showResult();
+		return showResult(playSpins());
 	}
 
 	private void intro() {
@@ -80,7 +81,7 @@ public class Slots {
 
 	}
 
-	private void playSpins() {
+	private boolean playSpins() {
 		boolean win = false;
 
 		for (int i = 0; i < player.getSpinCount(); i++) {
@@ -98,19 +99,25 @@ public class Slots {
 		if (!win) {
 			player.adjustBalance(-player.getBetDenom() * player.getSpinCount());
 		}
+
+		return win;
 	}
 
-	private void showResult() {
-		if (player.getBalance() > 500) {
+	private boolean showResult(boolean win) {
+		if (win) {
 			System.out.println("You won the slots room!");
+			gb.setBalance(player.getBalance());
+			return true;
 		} else {
 			System.out.println("You lost the slots room, better luck next time!");
+			gb.setBalance(player.getBalance());
+			return false;
 		}
 	}
 
 	public static void main(String[] args) {
-		Slots slotsGame = new Slots();
-		slotsGame.startGame();
+		//Slots slotsGame = new Slots();
+		//slotsGame.startGame();
 	}
 
 }
