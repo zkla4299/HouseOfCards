@@ -43,16 +43,43 @@ public class GameBackend {
                         state = "GameWin";
                     }
                     else if (switch7){
-                        state = "GameOne";
+                        switch3 = Oxvegas.blackJack();
+                        switch7 = false;
+                        if (switch3){
+
+                        }else{
+                            
+                        }
                     }
                     else if (switch8){
-                        state = "GameTwo";
+                        PokerGame PG = new PokerGame();
+                        /*switch4 = */PG.play();
+                        switch8 = false;
+                        if (switch4){
+
+                        }else{
+                            
+                        }
                     }
                     else if (switch9){
-                        state = "GameThree";
+                        Slots SG = new Slots();
+                        /*switch5 = */SG.startGame();
+                        switch9 = false;
+                        if (switch5){
+
+                        }else{
+                            
+                        }
                     }
                     else if (switch10){
-                        state = "GameFour";
+                        Roulette RG = new Roulette();
+                        switch6 = RG.play();
+                        switch10 = false;
+                        if (switch6){
+
+                        }else{
+
+                        }
                     }
                     else{
                         state = "HubRoom";
@@ -77,7 +104,7 @@ public class GameBackend {
             case ("new game"):
             case ("n g"):
             case ("n"):
-                if (state.equals("Title")){
+                if (!switch1){
                     switch1 = true;
                     gettingInput = false;
                 }
@@ -101,8 +128,7 @@ public class GameBackend {
 
             case ("help"):
             case ("help 1"):
-                System.out.println("HELP HERE (1)!!");//TODO
-                System.out.println("");
+                System.out.println("HELP PAGE ONE:\ntitle - syntax: title - The title command\ntakes the player back to the title of the game.\n\ngame end - syntax: game end (aliases: g e, exit game, e g, e) -\nThe game end command, quits the game and program.\n\nhelp - syntax: help (command) (page) - The help command,\ncan be used to look up info on commands\nand get detailed descriptions on them.\n\ngo - syntax: go R(location) - The go command,\nwill take the player to the location entered");
             break;
             case ("help 2"):
                 System.out.println("HELP HERE (2)!!");//TODO
@@ -353,6 +379,12 @@ public class GameBackend {
                 System.out.println("");
                 System.out.println("");
                 return "devcommand --201thehousealwayswins-- switch 2 true output false";
+
+            case("HubRoom"):
+                playerinput = scan.nextLine();
+                System.out.println("");
+                gettingInput = doGettingInput;
+                return playerinput;
 
             case("GameWin"):
 
