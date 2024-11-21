@@ -28,7 +28,7 @@ public class RouletteGame {
             System.out.println("Enter your bet amount (only multiples of $5):");
 
             int betAmount = scanner.nextInt();
-            if (betAmount % chipValue != 0 || betAmount > player.getBalance()) {
+            if (betAmount % chipValue != 0 || betAmount > player.getBalance() || betAmount < 0) {
                 System.out.println("Invalid bet amount. Please enter a multiple of $5.");
                 continue;
             }
