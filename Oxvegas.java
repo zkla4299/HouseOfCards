@@ -183,12 +183,12 @@ public class Oxvegas {
         // if user won enough move forward
         // players turn:
         boolean playerResult = playerTurn(playersHand, d1, multiplierValue);
-        if(handTotal(playersHand) == 21) {
+        if(handTotal(dealersHand) == 21) {
 
             System.out.println("Dealer got 21! All remaining players lose");
             System.out.println("their hand was: ");
             printHand(dealersHand);
-            System.out.println("their hand total is: " + handTotal(playersHand));
+            System.out.println("their hand total is: " + handTotal(dealersHand));
             return bankAmount + (multiplierValue*bidAmount);
         }
 
