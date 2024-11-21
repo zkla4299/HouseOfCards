@@ -3,6 +3,8 @@ import java.util.Scanner;
 
 public class Oxvegas {
 
+
+    //print card simply prints the card objects throughout the program
     public static void printCard(cardBlackJack c) {
         System.out.print(c.getCardKind());
         if(c.getCardVal() == 11) {
@@ -17,6 +19,8 @@ public class Oxvegas {
             System.out.print(c.getCardVal());
         }
     }
+
+    // Prints the hand of the player
     public static void printHand(ArrayList<cardBlackJack> hand) {
         System.out.print('[');
         for(int i = 0; i < hand.size() -1; i ++) {
@@ -26,6 +30,8 @@ public class Oxvegas {
         printCard(hand.get(hand.size()-1));
         System.out.println(']');
     }
+
+    // prints the hands of the other players including the dealer
     public static void printTableHands(ArrayList<cardBlackJack> hand) {
         System.out.print('[');
         for(int i = 0; i < hand.size() -2; i ++) {
@@ -38,6 +44,8 @@ public class Oxvegas {
 
         System.out.println(']');
     }
+
+    // calculates the hand total of a given player
     public static int handTotal(ArrayList<cardBlackJack> hand) {
         int sum = 0;
         for(int i = 0; i < hand.size(); i ++) {
@@ -50,6 +58,8 @@ public class Oxvegas {
         }
         return sum;
     }
+
+    // Asks user what action they want to take and turns that input into something we can use later
     public static String playerAction() {
         System.out.println();
         System.out.println("What would you like to do?");
@@ -60,26 +70,33 @@ public class Oxvegas {
         return inputValue.toLowerCase();
 
     }
+
+    // takes in everything above and executes the players turn
     public static boolean playerTurn(ArrayList<cardBlackJack> hand, DeckBlackJack d1, double returnValueMultiplyer) {
+
+        // print the hand of the player
         System.out.println("your hand is: ");
         printHand(hand);
         System.out.println("your hand total is: " + handTotal(hand));
         Boolean hold = false;
+        // player wins automatically if it's equal to 21
         while(handTotal(hand) < 22 && hold == false) {
             if(handTotal(hand) == 21) {
                 System.out.println("You got a hand equaling 21, you win "+ returnValueMultiplyer +"x your original bet!");
                 return true;
             }
+            // get players chosen action
             String action = playerAction();
 
+            // runs if player chooses to hold
             if(action.equals("hold")) {
                 hold = true;
-            } else if (action.equals("hit")) {
+            } else if (action.equals("hit")) { // runs if the player chooses to hit(draw a card)
                 hand.add(d1.drawCard());
                 System.out.println("your hand is: ");
                 printHand(hand);
                 System.out.println("your hand total is: " + handTotal(hand));
-                if(handTotal(hand) > 21) {
+                if(handTotal(hand) > 21) { // if the hand of the player is over 21 they automatically lose the round and their bet
                     System.out.println("your hand busted. You lose the round");
                     return false;
                 }
@@ -89,6 +106,8 @@ public class Oxvegas {
         }
         return true;
     }
+    // runs similarly to players turn but prints less and much more of it is in the background. implements simple logic that the other player can use to win or lose the game
+    // note that the other player doesn't impact the user's ability to win or lose, it's just something extra for the game to make it feel like it's more than just you and the dealer
     public static boolean otherPlayersTurn(ArrayList<cardBlackJack> hand, DeckBlackJack d1) {
         Boolean hold = false;
         while(handTotal(hand) < 22 && hold == false) {
@@ -120,6 +139,8 @@ public class Oxvegas {
         }
         return true;
     }
+
+    // runs in the back end taking in some basic logic to run a dealers turn. Also handles winning or losing. Directly impacting the user's ability to win
     public static boolean dealersTurn(ArrayList<cardBlackJack> hand, DeckBlackJack d1, double returnValueMultiplyer) {
         Boolean hold = false;
         while(handTotal(hand) < 22 && hold == false) {
@@ -142,6 +163,8 @@ public class Oxvegas {
         }
         return true;
     }
+
+    // This ties everything above it, runs for each round of BlackJack and updates balances
     public static double blackJackRound(double bankAmount) {
         DeckBlackJack d1 = new DeckBlackJack();
         d1.makeAndShuffleCards(false);
@@ -204,7 +227,7 @@ public class Oxvegas {
 
             System.out.println("Dealer got 21! All remaining players lose");
             System.out.println("their hand was: ");
-            printHand(playersHand);
+            printHand(dealersHand);
             System.out.println("their hand total is: " + handTotal(playersHand));
             return bankAmount + (multiplierValue*bidAmount);
         }
@@ -237,6 +260,8 @@ public class Oxvegas {
         if(dealerResult == true && playerResult == true) {
             if(dealershandTotal >=playerHandTotal) {
                 System.out.println("you lose, dealer wins!");
+                System.out.println("their hand was: ");
+                printHand(dealersHand);
             } else {
                 System.out.println("you win, you get " + multiplierValue + "x your bet");
                 return bankAmount + (multiplierValue*bidAmount);
@@ -252,6 +277,10 @@ public class Oxvegas {
         return bankAmount;
 
     }
+
+    // The blackJack function runs a number of blackJack rounds equal to the amount specified. Returns true if you win
+    // returns false if you lose either by losing all your money, or by not winning the minimum amount required to move on
+    // after a certain number of rounds.
     public static boolean blackJack() {
         int roundsPlayed = 0;
         int roundLimit = 5;
@@ -275,6 +304,8 @@ public class Oxvegas {
         }
         return false;
     }
+
+    // main just runs the BlackJack function.
     public static void main(String[] args) {
         blackJack();
     }
