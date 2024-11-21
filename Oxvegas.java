@@ -106,39 +106,6 @@ public class Oxvegas {
         }
         return true;
     }
-    // runs similarly to players turn but prints less and much more of it is in the background. implements simple logic that the other player can use to win or lose the game
-    // note that the other player doesn't impact the user's ability to win or lose, it's just something extra for the game to make it feel like it's more than just you and the dealer
-    public static boolean otherPlayersTurn(ArrayList<cardBlackJack> hand, DeckBlackJack d1) {
-        Boolean hold = false;
-        while(handTotal(hand) < 22 && hold == false) {
-
-            if(handTotal(hand) == 21) {
-
-                System.out.println("Other player got 21! He won");
-                System.out.println("their hand was: ");
-                printHand(hand);
-                System.out.println("their hand total is: " + handTotal(hand));
-                return true;
-            }
-
-            if(handTotal(hand) < 17) {
-                hand.add(d1.drawCard());
-                if(handTotal(hand) > 22) {
-                    System.out.println("other player's hand busted. they lose the round");
-                    System.out.println("their hand was: ");
-                    printHand(hand);
-                    System.out.println("their hand total is: " + handTotal(hand));
-                    return false;
-                }
-            } else {
-                System.out.println("their hand was: ");
-                printHand(hand);
-                System.out.println("their hand total is: " + handTotal(hand));
-                return true;
-            }
-        }
-        return true;
-    }
 
     // runs in the back end taking in some basic logic to run a dealers turn. Also handles winning or losing. Directly impacting the user's ability to win
     public static boolean dealersTurn(ArrayList<cardBlackJack> hand, DeckBlackJack d1, double returnValueMultiplyer) {
@@ -169,7 +136,6 @@ public class Oxvegas {
         DeckBlackJack d1 = new DeckBlackJack();
         d1.makeAndShuffleCards(false);
         ArrayList<cardBlackJack> playersHand = new ArrayList<cardBlackJack>();
-        ArrayList<cardBlackJack> otherPlayersHand = new ArrayList<cardBlackJack>();
         ArrayList<cardBlackJack> dealersHand = new ArrayList<cardBlackJack>();
 
         double multiplierValue = 2;
@@ -202,19 +168,13 @@ public class Oxvegas {
 
         // draws hand
         playersHand.add(d1.drawCard());
-        otherPlayersHand.add(d1.drawCard());
         dealersHand.add(d1.drawCard());
         playersHand.add(d1.drawCard());
-        otherPlayersHand.add(d1.drawCard());
         dealersHand.add(d1.drawCard());
 
         // others hands that you can see
         System.out.println("Dealers Hand: ");
         printTableHands(dealersHand);
-        System.out.println();
-
-        System.out.println("Other Players Hand: ");
-        printTableHands(otherPlayersHand);
         System.out.println();
 
 
@@ -234,10 +194,9 @@ public class Oxvegas {
 
         System.out.println();
 
-        boolean otherPlayerResult = otherPlayersTurn(otherPlayersHand, d1);
         boolean dealerResult = false;
 
-        if(playerResult == false && otherPlayerResult == false) {
+        if(playerResult == false) {
             System.out.println("Dealer wins all bets are lost");
         } else {
             System.out.println();
@@ -245,7 +204,6 @@ public class Oxvegas {
         }
 
         int playerHandTotal = handTotal(playersHand);
-        int otherPlayersHandTotal = handTotal(otherPlayersHand);
         int dealershandTotal = handTotal(dealersHand);
 
         if(dealerResult == false) {
@@ -253,9 +211,7 @@ public class Oxvegas {
                 System.out.println("you win! You beat the dealer");
                 return bankAmount + (multiplierValue*bidAmount);
             }
-            if(otherPlayerResult == true && otherPlayersHandTotal < 21) {
-                System.out.println("the other player wins! He got his bet back!");
-            }
+
         }
         if(dealerResult == true && playerResult == true) {
             if(dealershandTotal >=playerHandTotal) {
@@ -270,8 +226,6 @@ public class Oxvegas {
 
         if(dealershandTotal == playerHandTotal && playerHandTotal != 21) {
             System.out.println("you lost! the dealer tied with you. you lose your bet");
-        } if(dealershandTotal == otherPlayersHandTotal && otherPlayersHandTotal != 21) {
-            System.out.println("other player lost! the dealer tied with them. he loses his bet");
         }
 
         return bankAmount;
