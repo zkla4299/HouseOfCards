@@ -114,7 +114,7 @@ public class Oxvegas {
 
             if(handTotal(hand) < 17) {
                 hand.add(d1.drawCard());
-                if(handTotal(hand) > 22) {
+                if(handTotal(hand) >= 22) {
                     System.out.println("Dealer's hand busted. All remaining players win the round! bet is returned with a multiple of " + returnValueMultiplyer + "x");
                     System.out.println("their hand was: ");
                     printHand(hand);
@@ -218,6 +218,7 @@ public class Oxvegas {
                 System.out.println("you lose, dealer wins!");
                 System.out.println("their hand was: ");
                 printHand(dealersHand);
+                System.out.println(dealershandTotal);
             } else {
                 System.out.println("you win, you get " + multiplierValue + "x your bet");
                 return bankAmount + (multiplierValue*bidAmount);
@@ -255,6 +256,10 @@ public class Oxvegas {
                 System.out.println("You have no more remaining funds, you lost");
                 return false;
             }
+        }
+
+        if(currentAmount >= roundLimit){
+            System.out.println("player gets frustrated and leaves the table and goes back to the hub");
         }
         return false;
     }
