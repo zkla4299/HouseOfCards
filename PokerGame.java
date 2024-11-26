@@ -13,7 +13,6 @@ public class PokerGame {
 
     public PokerGame() {
         this.table = new PokerTable();
-        // Using the same bank values as original implementation
         this.bank = new Bank(10000, 10, 25, 100);
         this.scanner = new Scanner(System.in);
         this.gameRunning = true;
@@ -23,47 +22,40 @@ public class PokerGame {
         System.out.println("Enter your starting chips amount:");
         int initialChips = scanner.nextInt();
 
-        // Create human and computer players with proper player numbers
         humanPlayer = new Player(1, initialChips);
         computerPlayer = new Player(2, initialChips);
 
-        // Initial dealer setting
         humanPlayer.setDealer(true);
         computerPlayer.setDealer(false);
 
-        // Add players to table in proper order
         table.addPlayer(humanPlayer);
         table.addPlayer(computerPlayer);
     }
 
     public void playRound() {
-        // Reset table for new round
         table.nextRound();
-
-        // Deal hole cards using table's dealing mechanism
         table.dealPlayerCards();
 
-        // Display initial game state
         System.out.println("\nYour hand: " + humanPlayer.getHand());
         System.out.println("Your chips: " + humanPlayer.getChips());
         System.out.println("Computer's chips: " + computerPlayer.getChips());
 
-        // Conduct betting rounds
+        // Pre-flop
         if (!bettingRound("Pre-flop")) return;
 
-        // Deal and conduct flop
+        // Flop
         for (int i = 0; i < 3; i++) {
             table.dealCard();
         }
         System.out.println("\nFlop: " + table.getCommunityCards());
         if (!bettingRound("Flop")) return;
 
-        // Deal and conduct turn
+        // Turn
         table.dealCard();
         System.out.println("\nTurn: " + table.getCommunityCards());
         if (!bettingRound("Turn")) return;
 
-        // Deal and conduct river
+        // River
         table.dealCard();
         System.out.println("\nRiver: " + table.getCommunityCards());
         if (!bettingRound("River")) return;
@@ -74,27 +66,21 @@ public class PokerGame {
     private boolean bettingRound(String roundName) {
         System.out.println("\n=== " + roundName + " Betting Round ===");
 
-        // Human player's turn if still in hand
         if (!humanPlayer.getHand().isEmpty()) {
             handleHumanTurn();
         }
 
-        // Check if human folded
         if (humanPlayer.getHand().isEmpty()) {
-            // Use table's pot distribution mechanism
             computerPlayer.addChips(table.getPot());
             System.out.println("Computer wins " + table.getPot() + " chips!");
             return false;
         }
 
-        // Computer's turn if still in hand
         if (!computerPlayer.getHand().isEmpty()) {
-            handleComputerTurn();
+            handleComputerTurn(roundName);
         }
 
-        // Check if computer folded
         if (computerPlayer.getHand().isEmpty()) {
-            // Use table's pot distribution mechanism
             humanPlayer.addChips(table.getPot());
             System.out.println("You win " + table.getPot() + " chips!");
             return false;
@@ -119,23 +105,75 @@ public class PokerGame {
         handlePlayerAction(humanPlayer, choice, true);
     }
 
-    private void handleComputerTurn() {
+    private void handleComputerTurn(String roundName) {
         System.out.println("\nComputer's turn");
 
-        // Use the table's hand evaluation through Player's checkHand method
-        HandRank handRank = computerPlayer.checkHand(table.getCommunityCards());
         int choice;
-
-        // AI decision making based on hand rank
-        if (handRank.getRank() >= HandRank.THREE_OF_A_KIND) {
-            choice = new Random().nextInt(2) + 1; // 50% call, 50% raise
-        } else if (handRank.getRank() >= HandRank.PAIR) {
-            choice = new Random().nextBoolean() ? 1 : 3; // 50% call, 50% fold
+        if (roundName.equals("Pre-flop")) {
+            choice = preFlopDecision(computerPlayer.getHand());
         } else {
-            choice = new Random().nextInt(3) + 1; // Equal chance of all actions
+            // Get available cards for post-flop decision
+            List<Card> availableCards = new ArrayList<>(computerPlayer.getHand());
+            availableCards.addAll(table.getCommunityCards());
+
+            if (availableCards.size() < 5) {
+                // Shouldn't happen, but just in case
+                choice = new Random().nextInt(2) + 1; // Call or raise
+            } else {
+                try {
+                    // Evaluate current hand strength
+                    List<Card> allCards = new ArrayList<>(computerPlayer.getHand());
+                    allCards.addAll(table.getCommunityCards());
+
+                    HandRank handRank = HandEvaluator.evaluateHand(allCards);
+
+                    if (handRank.getRank() >= HandRank.THREE_OF_A_KIND) {
+                        choice = new Random().nextInt(2) + 1; // 50% call, 50% raise
+                    } else if (handRank.getRank() >= HandRank.PAIR) {
+                        choice = new Random().nextBoolean() ? 1 : 3; // 50% call, 50% fold
+                    } else {
+                        choice = new Random().nextInt(3) + 1; // Equal chance of all actions
+                    }
+                } catch (Exception e) {
+                    // If hand evaluation fails, make a conservative choice
+                    choice = 1; // Call
+                }
+            }
         }
 
         handlePlayerAction(computerPlayer, choice, false);
+    }
+
+    private int preFlopDecision(List<Card> holeCards) {
+        if (holeCards.size() != 2) {
+            return 1; // Default to call if something is wrong
+        }
+
+        // Sort hole cards by value
+        List<Card> sortedHoleCards = new ArrayList<>(holeCards);
+        sortedHoleCards.sort((a, b) -> Integer.compare(b.getValue(), a.getValue()));
+
+        int highCard = sortedHoleCards.get(0).getValue();
+        int lowCard = sortedHoleCards.get(1).getValue();
+        boolean isPair = highCard == lowCard;
+        boolean isSuited = sortedHoleCards.get(0).getSuit().equals(sortedHoleCards.get(1).getSuit());
+
+        // Strong starting hands
+        if (isPair && highCard >= 10) {
+            return new Random().nextInt(2) + 1; // 50% call, 50% raise
+        } else if (highCard >= 13 && lowCard >= 10) {
+            return new Random().nextInt(2) + 1; // 50% call, 50% raise
+        } else if (isPair) {
+            return 1; // Call
+        } else if (highCard >= 12 && lowCard >= 9 && isSuited) {
+            return 1; // Call
+        } else if (highCard >= 14 && lowCard >= 10) {
+            return 1; // Call
+        } else if (new Random().nextDouble() < 0.3) {
+            return new Random().nextInt(2) + 1; // Bluff occasionally
+        }
+
+        return 3; // Fold weak hands
     }
 
     private void handlePlayerAction(Player player, int choice, boolean isHuman) {
@@ -159,7 +197,6 @@ public class PokerGame {
                             return;
                         }
                     } else {
-                        // Computer's raise is double the current bet
                         raiseAmount = table.getCurrentBet() * 2;
                     }
                     table.placeBet(player, raiseAmount);
@@ -179,6 +216,7 @@ public class PokerGame {
         } catch (IllegalStateException e) {
             System.out.println("Error: " + e.getMessage());
             if (isHuman) {
+                System.out.println("Please try again:");
                 handlePlayerAction(player, scanner.nextInt(), isHuman);
             }
         }
@@ -187,22 +225,31 @@ public class PokerGame {
     private void showdown() {
         System.out.println("\n=== Showdown ===");
 
-        // Show hands and rankings using Player's checkHand method
         if (!humanPlayer.getHand().isEmpty()) {
-            HandRank humanRank = humanPlayer.checkHand(table.getCommunityCards());
-            System.out.println("Your hand: " + humanPlayer.getHand());
-            System.out.println("Your rank: " + humanRank.getName());
+            try {
+                List<Card> allCards = new ArrayList<>(humanPlayer.getHand());
+                allCards.addAll(table.getCommunityCards());
+                HandRank humanRank = HandEvaluator.evaluateHand(allCards);
+                System.out.println("Your hand: " + humanPlayer.getHand());
+                System.out.println("Your rank: " + humanRank.getName());
+            } catch (Exception e) {
+                System.out.println("Error evaluating your hand");
+            }
         }
 
         if (!computerPlayer.getHand().isEmpty()) {
-            HandRank computerRank = computerPlayer.checkHand(table.getCommunityCards());
-            System.out.println("Computer's hand: " + computerPlayer.getHand());
-            System.out.println("Computer's rank: " + computerRank.getName());
+            try {
+                List<Card> allCards = new ArrayList<>(computerPlayer.getHand());
+                allCards.addAll(table.getCommunityCards());
+                HandRank computerRank = HandEvaluator.evaluateHand(allCards);
+                System.out.println("Computer's hand: " + computerPlayer.getHand());
+                System.out.println("Computer's rank: " + computerRank.getName());
+            } catch (Exception e) {
+                System.out.println("Error evaluating computer's hand");
+            }
         }
 
-        // Use table's pot distribution mechanism
         table.distributePot();
-        System.out.println("Pot has been distributed: " + table.getPot());
     }
 
     public void play() {
@@ -220,7 +267,6 @@ public class PokerGame {
                 }
             }
 
-            // Game over message
             System.out.println("\nGame Over!");
             System.out.println("Final chips - You: " + humanPlayer.getChips() +
                     ", Computer: " + computerPlayer.getChips());
