@@ -57,7 +57,7 @@ public class GameBackend {
                             checkFailure();
                         }
                     }
-                    else if (switch8){
+                    else if ((switch8) && (!switch4)){
                         PokerGame PG = new PokerGame();
                         /*switch4 = */PG.play();
                         switch8 = false;
@@ -67,7 +67,7 @@ public class GameBackend {
                             
                         }
                     }
-                    else if (switch9){
+                    else if ((switch9) && (!switch5)){
                         System.out.println("Welcome to the slots room! Your goal is to hit the jackpot and walk away with a bigger balance.");
                         System.out.println("Choose one of two exciting slot machines, \"Rails to Riches\" or \"Luck of the Irish,\" each with unique odds and payouts.");
                         System.out.println("Set your bet denomination between $1 and $10, then choose how many times you want to spin (up to 10).");
@@ -85,7 +85,7 @@ public class GameBackend {
                             System.out.println("");
                         }
                     }
-                    else if (switch10){
+                    else if ((switch10) && (!switch6)){
                         RouletteGame RG = new RouletteGame();
                         switch6 = RG.play();
                         switch10 = false;
