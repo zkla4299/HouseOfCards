@@ -27,15 +27,15 @@ public class RouletteGame {
             System.out.println("You have $" + player.getBalance() + " left.");
             System.out.println("Enter your bet amount (only multiples of $5):");
 
-            int betAmount = scanner.nextInt();
-            if (betAmount % chipValue != 0 || betAmount > player.getBalance() || betAmount < 0) {
+            String betAmount = scanner.nextLine(); //CHANGE ALL NEXT INT TO NEXT LINE USING STRING AND PARSEINT
+            if (Integer.parseInt(betAmount) % chipValue != 0 || Integer.parseInt(betAmount) > player.getBalance() || Integer.parseInt(betAmount) < 0) {
                 System.out.println("Invalid bet amount. Please enter a multiple of $5.");
                 continue;
             }
 
-            player.adjustBalance(-betAmount); // Deduct the bet amount from the balance
-            int numberOfBets = betAmount / chipValue;
-            player.setBetDenom(betAmount); // Set the bet denomination
+            player.adjustBalance(-Integer.parseInt(betAmount)); // Deduct the bet amount from the balance
+            int numberOfBets = Integer.parseInt(betAmount) / chipValue;
+            player.setBetDenom(Integer.parseInt(betAmount)); // Set the bet denomination
 
             Set<Integer> chosenNumbers = new HashSet<>();
             List<Integer> betTypes = new ArrayList<>();
@@ -52,19 +52,19 @@ public class RouletteGame {
                 System.out.println("6. Red numbers");
                 System.out.println("7. Black numbers");
 
-                int betType = scanner.nextInt();
-                if (betType == 1) {
+                String betType = scanner.nextLine();
+                if (Integer.parseInt(betType) == 1) {
                     System.out.println("Enter the individual number you want to bet on (1-36):");
-                    int number = scanner.nextInt();
-                    if (number >= 1 && number <= 36) {
-                        chosenNumbers.add(number);
+                    String number = scanner.nextLine();
+                    if (Integer.parseInt(number) >= 1 && Integer.parseInt(number) <= 36) {
+                        chosenNumbers.add(Integer.parseInt(number));
                     } else {
                         System.out.println("Invalid number. Please enter a number between 1 and 36.");
                         i--;
                         continue;
                     }
-                } else if (betType >= 2 && betType <= 7) {
-                    betTypes.add(betType);
+                } else if (Integer.parseInt(betType) >= 2 && Integer.parseInt(betType) <= 7) {
+                    betTypes.add(Integer.parseInt(betType));
                 } else {
                     System.out.println("Invalid bet type.");
                     i--;
