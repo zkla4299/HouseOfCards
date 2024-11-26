@@ -196,18 +196,24 @@ public class Oxvegas {
 
         boolean dealerResult = false;
 
+        int playerHandTotal = handTotal(playersHand);
+
         if(playerResult == false) {
             System.out.println("Dealer wins all bets are lost");
         } else {
             System.out.println();
-            dealerResult = dealersTurn(dealersHand, d1, multiplierValue);
+            if (playerHandTotal != 21){
+                dealerResult = dealersTurn(dealersHand, d1, multiplierValue);
+            }
+            else{
+                dealerResult = false;
+            }
         }
-
-        int playerHandTotal = handTotal(playersHand);
+        
         int dealershandTotal = handTotal(dealersHand);
 
         if(dealerResult == false) {
-            if(playerResult == true && playerHandTotal < 21) {
+            if(playerResult == true && playerHandTotal < 22) {
                 System.out.println("you win! You beat the dealer");
                 return bankAmount + (multiplierValue*bidAmount);
             }
@@ -236,11 +242,11 @@ public class Oxvegas {
     // The blackJack function runs a number of blackJack rounds equal to the amount specified. Returns true if you win
     // returns false if you lose either by losing all your money, or by not winning the minimum amount required to move on
     // after a certain number of rounds.
-    public static boolean blackJack() {
+    public static boolean blackJack(GameBackend gb) {
         int roundsPlayed = 0;
         int roundLimit = 5;
-        double winAmount = 100;
-        double currentAmount = 50;
+        double winAmount = gb.getBalance() + 50;
+        double currentAmount = gb.getBalance();
         while(roundsPlayed < roundLimit && currentAmount < winAmount && currentAmount > 0) {
             currentAmount = blackJackRound(currentAmount);
             System.out.println();
@@ -249,11 +255,13 @@ public class Oxvegas {
 
             if(currentAmount >= winAmount) {
                 System.out.println("Congrats you won the BlackJack Room");
+                gb.setBalance(currentAmount);
                 return true;
             }
 
             if(currentAmount <= 0) {
                 System.out.println("You have no more remaining funds, you lost");
+                gb.setBalance(currentAmount);
                 return false;
             }
         }
@@ -266,6 +274,6 @@ public class Oxvegas {
 
     // main just runs the BlackJack function.
     public static void main(String[] args) {
-        blackJack();
+        //blackJack();
     }
 }
