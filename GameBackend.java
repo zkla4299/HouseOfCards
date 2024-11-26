@@ -68,6 +68,14 @@ public class GameBackend {
                         }
                     }
                     else if (switch9){
+                        System.out.println("Welcome to the slots room! Your goal is to hit the jackpot and walk away with a bigger balance.");
+                        System.out.println("Choose one of two exciting slot machines, \"Rails to Riches\" or \"Luck of the Irish,\" each with unique odds and payouts.");
+                        System.out.println("Set your bet denomination between $1 and $10, then choose how many times you want to spin (up to 10).");
+                        System.out.println("Every spin is a chance to hit the jackpot—win big with a multiplier of your bet!");
+                        System.out.println("To win, you must hit at least one jackpot and end the game with more money than you started.");
+                        System.out.println("Be cautious—if you don’t hit the jackpot, you’ll lose your bet for each spin.");
+                        System.out.println("Good luck, and may the reels align in your favor!");
+                        System.out.println("");
                         Slots SG = new Slots(this);
                         switch5 = SG.startGame();
                         switch9 = false;
