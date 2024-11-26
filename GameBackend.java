@@ -42,13 +42,19 @@ public class GameBackend {
                     if ((switch3) && (switch4) && (switch5) && (switch6)){
                         state = "GameWin";
                     }
-                    else if (switch7){
-                        //switch3 = Oxvegas.blackJack(this);
+                    else if ((switch7) && (!switch3)){
+                        System.out.println("Welcome to blackjack, the goal is to get as close to but not over 21 in hand value.");
+                        System.out.println("After your turns if at any point the dealer has a hand value that is greater than or equal to yours you lose.");
+                        System.out.println("Otherwise you win double your bet, to pass the room you have to get 50 dollars more than your initial balance.");
+                        System.out.println("Enter (\"a\") (\"b\") or (\"c\") to set your bet then enter hit or hold to either gain a card or pass your turn to the dealer.");
+                        System.out.println("");
+                        switch3 = Oxvegas.blackJack(this);
                         switch7 = false;
                         if (switch3){
-
+                            System.out.println("");
                         }else{
-                            
+                            System.out.println("");
+                            checkFailure();
                         }
                     }
                     else if (switch8){
@@ -65,15 +71,14 @@ public class GameBackend {
                         Slots SG = new Slots(this);
                         switch5 = SG.startGame();
                         switch9 = false;
-                        System.out.println(balance);
                         if (switch5){
-
+                            System.out.println("");
                         }else{
-                            
+                            System.out.println("");
                         }
                     }
                     else if (switch10){
-                        Roulette RG = new Roulette();
+                        RouletteGame RG = new RouletteGame();
                         switch6 = RG.play();
                         switch10 = false;
                         if (switch6){
@@ -388,7 +393,7 @@ public class GameBackend {
                 return playerinput;
 
             case("GameWin"):
-
+                System.out.println("YOU WIN!");
                 return "e";
 
             case("gettingInput"):
@@ -417,6 +422,15 @@ public class GameBackend {
         switch8 = value;
         switch9 = value;
         switch10 = value;
+    }
+
+    private void checkFailure(){
+        if (balance < 0){
+            System.out.println("");
+            gettingInput = false;
+            setAllSwitches(false);
+            balance = 250;
+        }
     }
 
     /**
