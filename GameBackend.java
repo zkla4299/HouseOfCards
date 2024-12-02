@@ -59,6 +59,9 @@ public class GameBackend {
                             checkFailure();
                         }
                     }
+                    else if ((switch7) && (switch3)){
+                        System.out.println("You head towards blackjack before remembering that you had already won in that room.");
+                    }
                     else if ((switch8) && (!switch4)){
                         PokerGame PG = new PokerGame();
                         switch4 = PG.play();
@@ -71,6 +74,9 @@ public class GameBackend {
                             System.out.println("");
                             checkFailure();
                         }
+                    }
+                    else if ((switch8) && (switch4)){
+                        System.out.println("You head towards poker before remembering that you had already won in that room.");
                     }
                     else if ((switch9) && (!switch5)){
                         System.out.println("Welcome to the slots room! Your goal is to hit the jackpot and walk away with a bigger balance.");
@@ -93,6 +99,9 @@ public class GameBackend {
                             checkFailure();
                         }
                     }
+                    else if ((switch9) && (switch5)){
+                        System.out.println("You head towards slots before remembering that you had already won in that room.");
+                    }
                     else if ((switch10) && (!switch6)){
                         RouletteGame RG = new RouletteGame();
                         switch6 = RG.play();
@@ -105,6 +114,9 @@ public class GameBackend {
                             System.out.println("");
                             checkFailure();
                         }
+                    }
+                    else if ((switch10) && (switch6)){
+                        System.out.println("You head towards roulette before remembering that you had already won in that room.");
                     }
                     else{
                         state = "HubRoom";
