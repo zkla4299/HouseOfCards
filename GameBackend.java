@@ -61,6 +61,7 @@ public class GameBackend {
                     }
                     else if ((switch7) && (switch3)){
                         System.out.println("You head towards blackjack before remembering that you had already won in that room.");
+                        switch7 = false;
                     }
                     else if ((switch8) && (!switch4)){
                         PokerGame PG = new PokerGame();
@@ -77,6 +78,7 @@ public class GameBackend {
                     }
                     else if ((switch8) && (switch4)){
                         System.out.println("You head towards poker before remembering that you had already won in that room.");
+                        switch8 = false;
                     }
                     else if ((switch9) && (!switch5)){
                         System.out.println("Welcome to the slots room! Your goal is to hit the jackpot and walk away with a bigger balance.");
@@ -101,6 +103,7 @@ public class GameBackend {
                     }
                     else if ((switch9) && (switch5)){
                         System.out.println("You head towards slots before remembering that you had already won in that room.");
+                        switch9 = false;
                     }
                     else if ((switch10) && (!switch6)){
                         RouletteGame RG = new RouletteGame();
@@ -117,6 +120,7 @@ public class GameBackend {
                     }
                     else if ((switch10) && (switch6)){
                         System.out.println("You head towards roulette before remembering that you had already won in that room.");
+                        switch10 = false;
                     }
                     else{
                         state = "HubRoom";
@@ -418,8 +422,9 @@ public class GameBackend {
                 return "devcommand --201thehousealwayswins-- switch 2 true output false";
 
             case("HubRoom"):
-                playerinput = scan.nextLine();
                 System.out.println("You enter the hub room you see four doors in front of you.\nGlowing neon signs adorn each of them.");
+                System.out.println("");
+                playerinput = scan.nextLine();
                 System.out.println("");
                 gettingInput = doGettingInput;
                 return playerinput;
