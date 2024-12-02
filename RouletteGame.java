@@ -101,11 +101,11 @@ public class RouletteGame {
 
         if (player.getBalance() >= winAmount) {
             System.out.println("\nCongratulations! You won the game with $" + player.getBalance() + ".");
-            scanner.close();
+            
             return true;
         } else {
             System.out.println("\nYou lost the game. You have $" + player.getBalance() + " left.");
-            scanner.close();
+            
             return false;
         }
 
