@@ -158,6 +158,10 @@ public class rouletteString {
     // Main method to start the game
     public static void main(String[] args) {
         rouletteString game = new rouletteString(); 
+        System.out.println("Welcome to Roulette!\nIn this game, you will have 5 rounds to try and win x amount of money."
+        		+ "\nFor each round, input how much you want to bet and look over the menu to choose what you want to bet on."
+        		+ "\nGood Luck!");
         game.play(); 
+        
     }
 }
