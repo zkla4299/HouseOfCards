@@ -252,7 +252,7 @@ public class PokerGame {
         table.distributePot();
     }
 
-    public void play() {
+    public boolean play() {
         try {
             System.out.println("Welcome to Single-Player Poker!");
             initializePlayers();
@@ -277,6 +277,7 @@ public class PokerGame {
         } finally {
             scanner.close();
         }
+        return (humanPlayer.getChips() > computerPlayer.getChips());
     }
 
     public static void main(String[] args) {

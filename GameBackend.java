@@ -51,20 +51,25 @@ public class GameBackend {
                         switch3 = Oxvegas.blackJack(this);
                         switch7 = false;
                         if (switch3){
+                            System.out.println("Congrats on winning blackjack!\nupon winning you return to the hub room and face the four doors once more, richer and ready to face any remaining challanges!");
                             System.out.println("");
                         }else{
+                            System.out.println("You lost and return to the hub room defated but not out?");
                             System.out.println("");
                             checkFailure();
                         }
                     }
                     else if ((switch8) && (!switch4)){
                         PokerGame PG = new PokerGame();
-                        /*switch4 = */PG.play();
+                        switch4 = PG.play();
                         switch8 = false;
                         if (switch4){
-
+                            System.out.println("Congrats on winning poker!\nUpon winning you return to the hub room and face the four doors once more, richer and ready to face any remaining challanges!");
+                            System.out.println("");
                         }else{
-                            
+                            System.out.println("You lost and return to the hub room defated but not out?");
+                            System.out.println("");
+                            checkFailure();
                         }
                     }
                     else if ((switch9) && (!switch5)){
@@ -80,9 +85,12 @@ public class GameBackend {
                         switch5 = SG.startGame();
                         switch9 = false;
                         if (switch5){
+                            System.out.println("Congrats on winning slots!\nupon winning you return to the hub room and face the four doors once more, richer and ready to face any remaining challanges!");
                             System.out.println("");
                         }else{
+                            System.out.println("You lost and return to the hub room defated but not out?");
                             System.out.println("");
+                            checkFailure();
                         }
                     }
                     else if ((switch10) && (!switch6)){
@@ -90,9 +98,12 @@ public class GameBackend {
                         switch6 = RG.play();
                         switch10 = false;
                         if (switch6){
-
+                            System.out.println("Congrats on winning roulette!\nupon winning you return to the hub room and face the four doors once more, richer and ready to face any remaining challanges!");
+                            System.out.println("");
                         }else{
-
+                            System.out.println("You lost and return to the hub room defated but not out?");
+                            System.out.println("");
+                            checkFailure();
                         }
                     }
                     else{
@@ -145,7 +156,7 @@ public class GameBackend {
                 System.out.println("HELP PAGE ONE:\ntitle - syntax: title - The title command\ntakes the player back to the title of the game.\n\ngame end - syntax: game end (aliases: g e, exit game, e g, e) -\nThe game end command, quits the game and program.\n\nhelp - syntax: help (command) (page) - The help command,\ncan be used to look up info on commands\nand get detailed descriptions on them.\n\ngo - syntax: go R(location) - The go command,\nwill take the player to the location entered");
             break;
             case ("help 2"):
-                System.out.println("HELP HERE (2)!!");//TODO
+                System.out.println("HELP PAGE TWO:\nRooms that can be accessed from the hub are as follows:\nBlackjack\nPoker\nSlots\nRoulette");//TODO
                 System.out.println("");
             break;
             case ("help 3"):
