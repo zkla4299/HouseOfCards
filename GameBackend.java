@@ -407,6 +407,7 @@ public class GameBackend {
 
             case("HubRoom"):
                 playerinput = scan.nextLine();
+                System.out.println("You enter the hub room you see four doors in front of you.\nGlowing neon signs adorn each of them.");
                 System.out.println("");
                 gettingInput = doGettingInput;
                 return playerinput;
@@ -445,7 +446,7 @@ public class GameBackend {
 
     private void checkFailure(){
         if (balance < 0){
-            System.out.println("");
+            System.out.println("Try as you might you lost all of your money, you feel faint, dizzy you fall to the floor and black out.\nYou awake at the front of the casino perhaps ready to try again?\n");
             gettingInput = false;
             setAllSwitches(false);
             balance = 250;
