@@ -19,6 +19,15 @@ public class PokerGame {
     }
 
     public void initializePlayers() {
+        System.out.println("You will be given a hand with two cards at first, and you have the option to call, raise, and fold. This is called the pre-flop betting round. \n" +
+                "\n" +
+                "Then you will have another chance to call, raise, and fold once you see three more cards on the table. This is called the Flop round. \n" +
+                "\n" +
+                "Then another card gets added to the flop round which changes it to the turn betting round. You will have another chance to call, raise, and fold. \n" +
+                "\n" +
+                "Then, you will see all 5 cards on the table which is called the River Betting Round. You will have one more option to call, raise and fold. \n" +
+                "\n" +
+                "Last but not least you will have a Showdown which will show your hand, and your rank, and the computers hand, and computer’s rank. \n");
         System.out.println("Enter your starting chips amount:");
         int initialChips = scanner.nextInt();
 
