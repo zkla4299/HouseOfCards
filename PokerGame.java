@@ -261,7 +261,7 @@ public class PokerGame {
         table.distributePot();
     }
 
-    public boolean play() {
+    public boolean play(GameBackend GB) {
         try {
             System.out.println("Welcome to Single-Player Poker!");
             initializePlayers();
@@ -284,13 +284,13 @@ public class PokerGame {
             System.out.println("Game error: " + e.getMessage());
             e.printStackTrace();
         } finally {
-            scanner.close();
+            
         }
         return (humanPlayer.getChips() > computerPlayer.getChips());
     }
 
     public static void main(String[] args) {
         PokerGame game = new PokerGame();
-        game.play();
+        //game.play();
     }
 }

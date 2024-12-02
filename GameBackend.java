@@ -65,7 +65,7 @@ public class GameBackend {
                     }
                     else if ((switch8) && (!switch4)){
                         PokerGame PG = new PokerGame();
-                        switch4 = PG.play();
+                        switch4 = PG.play(this);
                         switch8 = false;
                         if (switch4){
                             System.out.println("Congrats on winning poker!\nUpon winning you return to the hub room and face the four doors once more, richer and ready to face any remaining challanges!");
