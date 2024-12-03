@@ -268,6 +268,7 @@ public class Oxvegas {
 
         if(currentAmount >= roundLimit){
             System.out.println("player gets frustrated and leaves the table and goes back to the hub");
+            gb.setBalance(currentAmount);
         }
         return false;
     }
