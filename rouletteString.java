@@ -18,7 +18,7 @@ public class rouletteString {
 
     // Constructor initializes the player with a starting balance and spin count
     public rouletteString() {
-        this.player = new RoulettePlayer(100, 0, maxRounds); 
+        this.player = new RoulettePlayer(this.currentbalance, 0, maxRounds); 
         this.roundsPlayed = 0; 
     }
 
@@ -158,7 +158,8 @@ public class rouletteString {
     // Main method to start the game
     public static void main(String[] args) {
         rouletteString game = new rouletteString(); 
-        System.out.println("Welcome to Roulette!\nIn this game, you will have 5 rounds to try and win x amount of money."
+        System.out.println("Welcome to Roulette!\nIn this game, you will have 5 rounds to gain $200 from your current balance."
+        		+ "\n Current balance = " + this.currentBalance 
         		+ "\nFor each round, input how much you want to bet and look over the menu to choose what you want to bet on."
         		+ "\nGood Luck!");
         game.play(); 
