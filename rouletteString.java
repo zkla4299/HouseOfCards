@@ -16,14 +16,17 @@ public class rouletteString {
     private RoulettePlayer player;
     private int roundsPlayed;
 
+    private double currentbalance;
+
     // Constructor initializes the player with a starting balance and spin count
-    public rouletteString() {
+    public rouletteString(GameBackend GB) {
+        currentbalance = GB.getBalance();
         this.player = new RoulettePlayer(this.currentbalance, 0, maxRounds); 
         this.roundsPlayed = 0; 
     }
 
     // Main gameplay loop
-    public boolean play() {
+    public boolean play(GameBackend GB) {
         Scanner scanner = new Scanner(System.in); 
 
         // Continue while there are rounds left and the player has money
@@ -115,11 +118,11 @@ public class rouletteString {
         // Determine if the player won or lost the game
         if (player.getBalance() >= winAmount) {
             System.out.println("\nCongratulations! You won the game with $" + player.getBalance() + ".");
-            scanner.close();
+            GB.setBalance(player.getBalance());
             return true;
         } else {
             System.out.println("\nYou lost the game. You have $" + player.getBalance() + " left.");
-            scanner.close();
+            GB.setBalance(player.getBalance());
             return false;
         }
     }
@@ -157,12 +160,12 @@ public class rouletteString {
 
     // Main method to start the game
     public static void main(String[] args) {
-        rouletteString game = new rouletteString(); 
-        System.out.println("Welcome to Roulette!\nIn this game, you will have 5 rounds to gain $200 from your current balance."
-        		+ "\n Current balance = " + this.currentBalance 
-        		+ "\nFor each round, input how much you want to bet and look over the menu to choose what you want to bet on."
-        		+ "\nGood Luck!");
-        game.play(); 
+        //rouletteString game = new rouletteString(); 
+        //System.out.println("Welcome to Roulette!\nIn this game, you will have 5 rounds to gain $200 from your current balance."
+        //		+ "\n Current balance = " + this.currentbalance 
+        //		+ "\nFor each round, input how much you want to bet and look over the menu to choose what you want to bet on."
+        //		+ "\nGood Luck!");
+        //game.play(); 
         
     }
 }

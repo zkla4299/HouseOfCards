@@ -53,6 +53,9 @@ public class GameBackend {
                         if (switch3){
                             System.out.println("Congrats on winning blackjack!\nupon winning you return to the hub room and face the four doors once more, richer and ready to face any remaining challanges!");
                             System.out.println("");
+                            if ((switch3) && (switch4) && (switch5) && (switch6)){
+                                state = "GameWin";
+                            }
                         }else{
                             System.out.println("You lost and return to the hub room defated but not out?");
                             System.out.println("");
@@ -70,6 +73,9 @@ public class GameBackend {
                         if (switch4){
                             System.out.println("Congrats on winning poker!\nUpon winning you return to the hub room and face the four doors once more, richer and ready to face any remaining challanges!");
                             System.out.println("");
+                            if ((switch3) && (switch4) && (switch5) && (switch6)){
+                                state = "GameWin";
+                            }
                         }else{
                             System.out.println("You lost and return to the hub room defated but not out?");
                             System.out.println("");
@@ -95,6 +101,9 @@ public class GameBackend {
                         if (switch5){
                             System.out.println("Congrats on winning slots!\nupon winning you return to the hub room and face the four doors once more, richer and ready to face any remaining challanges!");
                             System.out.println("");
+                            if ((switch3) && (switch4) && (switch5) && (switch6)){
+                                state = "GameWin";
+                            }
                         }else{
                             System.out.println("You lost and return to the hub room defated but not out?");
                             System.out.println("");
@@ -106,12 +115,19 @@ public class GameBackend {
                         switch9 = false;
                     }
                     else if ((switch10) && (!switch6)){
-                        RouletteGame RG = new RouletteGame();
-                        switch6 = RG.play();
+                        System.out.println("Welcome to Roulette!\nIn this game, you will have 5 rounds to gain $200 from your current balance."
+                            + "\nCurrent balance = " + balance
+        		            + "\nFor each round, input how much you want to bet and look over the menu to choose what you want to bet on."
+        		            + "\nGood Luck!");
+                        rouletteString RG = new rouletteString(this);
+                        switch6 = RG.play(this);
                         switch10 = false;
                         if (switch6){
                             System.out.println("Congrats on winning roulette!\nupon winning you return to the hub room and face the four doors once more, richer and ready to face any remaining challanges!");
                             System.out.println("");
+                            if ((switch3) && (switch4) && (switch5) && (switch6)){
+                                state = "GameWin";
+                            }
                         }else{
                             System.out.println("You lost and return to the hub room defated but not out?");
                             System.out.println("");
@@ -172,11 +188,7 @@ public class GameBackend {
                 System.out.println("HELP PAGE ONE:\ntitle - syntax: title - The title command\ntakes the player back to the title of the game.\n\ngame end - syntax: game end (aliases: g e, exit game, e g, e) -\nThe game end command, quits the game and program.\n\nhelp - syntax: help (command) (page) - The help command,\ncan be used to look up info on commands\nand get detailed descriptions on them.\n\ngo - syntax: go R(location) - The go command,\nwill take the player to the location entered");
             break;
             case ("help 2"):
-                System.out.println("HELP PAGE TWO:\nRooms that can be accessed from the hub are as follows:\nBlackjack\nPoker\nSlots\nRoulette");//TODO
-                System.out.println("");
-            break;
-            case ("help 3"):
-                System.out.println("HELP HERE (3)!!");//TODO
+                System.out.println("HELP PAGE TWO:\nRooms that can be accessed from the hub are as follows:\nBlackjack\nPoker\nSlots\nRoulette");
                 System.out.println("");
             break;
 
