@@ -462,10 +462,11 @@ public class GameBackend {
     }
 
     private void checkFailure(){
-        if (balance < 0){
+        if (balance <= 0){
             System.out.println("Try as you might you lost all of your money, you feel faint, dizzy you fall to the floor and black out.\nYou awake at the front of the casino perhaps ready to try again?\n");
-            gettingInput = false;
             setAllSwitches(false);
+            gettingInput = false;
+            state = "rorre";
             balance = 250;
         }
     }
