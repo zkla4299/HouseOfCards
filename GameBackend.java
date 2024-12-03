@@ -60,7 +60,7 @@ public class GameBackend {
                         }
                     }
                     else if ((switch7) && (switch3)){
-                        System.out.println("You head towards blackjack before remembering that you had already won in that room.");
+                        System.out.println("You head towards blackjack before remembering that you had already won in that room.\n");
                         switch7 = false;
                     }
                     else if ((switch8) && (!switch4)){
@@ -77,7 +77,7 @@ public class GameBackend {
                         }
                     }
                     else if ((switch8) && (switch4)){
-                        System.out.println("You head towards poker before remembering that you had already won in that room.");
+                        System.out.println("You head towards poker before remembering that you had already won in that room.\n");
                         switch8 = false;
                     }
                     else if ((switch9) && (!switch5)){
@@ -102,7 +102,7 @@ public class GameBackend {
                         }
                     }
                     else if ((switch9) && (switch5)){
-                        System.out.println("You head towards slots before remembering that you had already won in that room.");
+                        System.out.println("You head towards slots before remembering that you had already won in that room.\n");
                         switch9 = false;
                     }
                     else if ((switch10) && (!switch6)){
@@ -119,7 +119,7 @@ public class GameBackend {
                         }
                     }
                     else if ((switch10) && (switch6)){
-                        System.out.println("You head towards roulette before remembering that you had already won in that room.");
+                        System.out.println("You head towards roulette before remembering that you had already won in that room.\n");
                         switch10 = false;
                     }
                     else{
