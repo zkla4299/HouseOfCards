@@ -57,8 +57,8 @@ public class Slots {
 	private void setBetDenomination() {
 
 		System.out.println("You sit down at the " + machine.getName() + " machine and a prompt shows up on the screen: ");
-		System.out.println("Choose Denomination! ($1-10)");
-		System.out.println("What would you like to enter?");
+		//System.out.println("Choose Denomination! ($1-10)");
+		//System.out.println("What would you like to enter?");
 
 		String prompt = "Choose Denomination! ($1-10)\nWhat would you like to enter?";
 	    int denom = getValidIntInput(prompt, 1, 10); //helper method
